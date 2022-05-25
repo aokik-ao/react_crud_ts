@@ -30,6 +30,10 @@ export const ItemList = () => {
     alert(id);
   };
 
+  const onClickNewItem = ()=>{
+      alert("新規登録をしますよ");
+  }
+
   //   CSSを定義
   const Sh = styled.h1`
     margin-left: 16px;
@@ -56,9 +60,19 @@ export const ItemList = () => {
     margin-right: 24px;
   `;
 
-  const Sbutton = styled.button`
+  const Sprimarybutton = styled.button`
     padding: 4px 8px;
+    border-radius: 10px;
+    background-color: lightblue;
   `;
+
+  const Ssecondarybutton = styled.button`
+    padding: 4px 8px;
+    border-radius: 10px;
+    width: 150px;
+    background-color: lightcoral;
+  `;
+
 
   return (
     <>
@@ -72,11 +86,12 @@ export const ItemList = () => {
             <Sval>{item.name}</Sval>
             <Slabel>金額</Slabel>
             <Sval>{item.price}円</Sval>
-            <Sbutton onClick={() => onClickShowDetail(item.id)}>
+            <Sprimarybutton onClick={() => onClickShowDetail(item.id)}>
               詳細画面へ
-            </Sbutton>
+            </Sprimarybutton>
           </Srow>
         ))}
+        <Ssecondarybutton onClick={onClickNewItem}>新規登録をする</Ssecondarybutton>
       </SContainer>
     </>
   );
