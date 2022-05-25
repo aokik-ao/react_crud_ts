@@ -22,6 +22,7 @@ class Item_detail extends RestController
      */
     public function index_get()
     {
+        $a = $_GET("id");
         $url_list = explode('/',current_url());
         $id = $url_list[count($url_list) - 1];
         $data = $this->items->select_items_by_key($id);

@@ -1,38 +1,41 @@
 import Axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 
-type Items = {
+type Item = {
+  id: number;
   category_id: number;
   category_name: string;
-  id: number;
   name: string;
-  point_ratio: number;
   price: number;
-  regist_date: string;
+  point_ratio: number;
   reserve_only_flag: boolean;
+  regist_date: string;
   update_date: string;
 };
 
 export const ItemList = () => {
-  const [items, setItems] = useState<Array<Items>>([]);
+  const [items, setItems] = useState<Array<Item>>([]);
 
   // 商品データを取得する
   useEffect(() => {
-    Axios.get("http://localhost:8080/react_crud/item_list").then((res) => {
+    Axios.get("http://localhost:8080/react_crud_ts/item_list").then((res) => {
       setItems(res.data);
     });
   }, []);
 
-//   詳細画面へ遷移させる
-// usehistoryを使うよ
+  //   詳細画面へ遷移させる
+  // usehistoryを使うよ
   const onClickShowDetail = (id: number) => {
+    // const history = useHistory();
+    // history.push(`/detail/?id=${id}`)
     alert(id);
   };
 
-  const onClickNewItem = ()=>{
-      alert("新規登録をしますよ");
-  }
+  const onClickNewItem = () => {
+    alert("新規登録をしますよ");
+  };
 
   //   CSSを定義
   const Sh = styled.h1`
@@ -73,7 +76,6 @@ export const ItemList = () => {
     background-color: lightcoral;
   `;
 
-
   return (
     <>
       <Sh>商品一覧</Sh>
@@ -91,7 +93,9 @@ export const ItemList = () => {
             </Sprimarybutton>
           </Srow>
         ))}
-        <Ssecondarybutton onClick={onClickNewItem}>新規登録をする</Ssecondarybutton>
+        <Ssecondarybutton onClick={onClickNewItem}>
+          新規登録をする
+        </Ssecondarybutton>
       </SContainer>
     </>
   );
