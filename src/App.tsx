@@ -9,7 +9,8 @@ export default function App() {
     <div className="App">
       <BrowserRouter>
         <Switch>
-          {/* <Route path="/">
+          {/* ↓が上手く機能していない */}
+          {/* <Route exact path="/">
             <ItemList />
           </Route> */}
           <Route exact path="/react_crud_ts/ItemList">

@@ -60,6 +60,6 @@ $route['item_detail']['post'] = 'item_detail/index_post';
 $route['item_categories']['get'] = 'item_categories/index_get';
 
 // 画面のページのURL、phpからは表示はしないので全部indexに送る
-$route['ItemList'] = 'index';
-$route[':any'] = 'index';
-$route['ItemList/Detail'] = 'index';
+$route['404_override'] = 'index';
+// $route['ItemList'] = 'index';
+// $route['ItemList/Detail/(:any)'] = 'index';
