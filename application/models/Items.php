@@ -44,4 +44,9 @@ class Items extends MY_Model
         $query = $this->db->get();
         return $query->row();
     }
+
+    public function delele_item($id)
+    {
+        $this->db->delete('public.items', array('id' => $id));
+    }
 }

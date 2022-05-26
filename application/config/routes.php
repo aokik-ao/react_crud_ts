@@ -54,12 +54,15 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
 // APIのURL
+// 一覧で使用
 $route['item_list']['get'] = 'item_list/index_get';
+// 詳細系で使用
 $route['item_detail/(:num)'] = 'item_detail/index_get';
 $route['item_detail']['post'] = 'item_detail/index_post';
+$route['item_detail']['delete'] = 'item_detail/index_delete';
+
+// 詳細でカテゴリーを取得するのに使用
 $route['item_categories']['get'] = 'item_categories/index_get';
 
-// 画面のページのURL、phpからは表示はしないので全部indexに送る
+// 画面のページのURL、phpからは表示はしないので全部indexに送るよう404をオーバーライドした
 $route['404_override'] = 'index';
-// $route['ItemList'] = 'index';
-// $route['ItemList/Detail/(:any)'] = 'index';
