@@ -19,6 +19,9 @@ CREATE TABLE public.items
     update_date timestamp with time zone
 );
 
+TRUNCATE TABLE public.items;
+TRUNCATE TABLE public.categories RESTART IDENTITY CASCADE;
+
 -- categories
 INSERT INTO public.categories(name, regist_date, update_date) VALUES ('PC本体', now(), now());
 INSERT INTO public.categories(name, regist_date, update_date) VALUES ('マウス', now(), now());

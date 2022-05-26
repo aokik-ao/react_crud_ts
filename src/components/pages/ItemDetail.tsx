@@ -98,10 +98,12 @@ export const ItemDetail = () => {
     margin-right: 16px;
   `;
 
-  const Ssecondarybutton = styled.button`
-    padding: 4px 8px;
-    border-radius: 10px;
+  const Ssecondarybutton = styled(Sprimarybutton)`
     background-color: lightcoral;
+    `;
+
+const SpagebackButton = styled(Sprimarybutton)`
+    background-color: lightgreen;
   `;
 
   const onClickUpdate = () => {
@@ -111,6 +113,8 @@ export const ItemDetail = () => {
     // useStateは各入力項目ごとに作成する必要あり。
     // https://www.sukerou.com/2019/05/axios.html
   };
+
+
 
   const onClickDelete = () => {
     window.confirm("削除をします。よろしいですか？");
@@ -127,6 +131,8 @@ export const ItemDetail = () => {
         history.push("/react_crud_ts/ItemList");
       });
   };
+
+  const onClickPageback = () => history.push("/react_crud_ts/ItemList");
 
   return (
     <>
@@ -189,6 +195,7 @@ export const ItemDetail = () => {
         <SbuttonBox>
           <Sprimarybutton onClick={onClickUpdate}>更新する</Sprimarybutton>
           <Ssecondarybutton onClick={onClickDelete}>削除する</Ssecondarybutton>
+          <SpagebackButton onClick={onClickPageback}>戻る</SpagebackButton>
         </SbuttonBox>
       </Scontainer>
     </>
