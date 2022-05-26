@@ -1,6 +1,7 @@
-import Axios from "axios";
-import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import Axios from "axios";
+
 import styled from "styled-components";
 
 type Item = {
@@ -25,13 +26,7 @@ export const ItemList = () => {
     });
   }, []);
 
-  //   詳細画面へ遷移させる
-  // usehistoryを使うよ
-  const onClickShowDetail = (id: number) => {
-    // const history = useHistory();
-    // history.push(`/detail/?id=${id}`)
-    alert(id);
-  };
+  const history = useHistory();
 
   const onClickNewItem = () => {
     alert("新規登録をしますよ");
@@ -88,7 +83,12 @@ export const ItemList = () => {
             <Sval>{item.name}</Sval>
             <Slabel>金額</Slabel>
             <Sval>{item.price}円</Sval>
-            <Sprimarybutton onClick={() => onClickShowDetail(item.id)}>
+            <Sprimarybutton
+              // 詳細画面へ遷移させる
+              onClick={() => {
+                history.push(`ItemList/detail/?id=${item.id}`);
+              }}
+            >
               詳細画面へ
             </Sprimarybutton>
           </Srow>

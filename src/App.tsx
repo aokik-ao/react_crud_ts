@@ -9,14 +9,17 @@ export default function App() {
     <div className="App">
       <BrowserRouter>
         <Switch>
-          <Route path="/">
+          {/* <Route path="/">
+            <ItemList />
+          </Route> */}
+          <Route exact path="/react_crud_ts/ItemList">
             <ItemList />
           </Route>
-          <Route path="/ItemList">
-            <ItemList />
-          </Route>
-          <Route path="/ItemList/Detail/:id">
+          <Route exact path="/react_crud_ts/ItemList/Detail">
             <ItemDetail />
+          </Route>
+          <Route path="*">
+            <p>404です</p>
           </Route>
         </Switch>
       </BrowserRouter>
