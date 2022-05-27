@@ -138,6 +138,9 @@ class Item_detail extends RestController
     private function validation($params, $error_messages)
     {
         $comma = ',';
+        if ($params['category_id'] == "") {
+            $error_messages .= '商品カテゴリーを選択してください。' . $comma;
+        }
         if ($params['name'] == "") {
             $error_messages .= '商品名を入力してください。' . $comma;
         } else if (mb_strlen($params['name']) > 30) {

@@ -22,6 +22,10 @@ class Item_categories extends RestController
     public function index_get()
     {
         $data = $this->categories->select_categories();
+        $empty_object = new stdClass();
+        $empty_object->id = "";
+        $empty_object->name = "";
+        array_unshift($data, $empty_object);
         $this->response($data, RestController::HTTP_OK);
     }
 }

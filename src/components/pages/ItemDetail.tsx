@@ -117,7 +117,7 @@ export const ItemDetail = (props: propsType) => {
       // 更新としてputメソッドを送信する
       const postData = {
         id: inputId,
-        category_id: inputCategoryId,
+        category_id: inputCategoryId ?? "",
         name: inputName,
         price: inputPrice,
         point_ratio: inputPointRatio,
@@ -167,7 +167,7 @@ export const ItemDetail = (props: propsType) => {
     if (window.confirm("新規登録をします。よろしいですか？")) {
       // 新規登録としてpostメソッドを送信する
       const postData = {
-        category_id: inputCategoryId,
+        category_id: inputCategoryId ?? "",
         name: inputName ?? "",
         price: inputPrice ?? "",
         point_ratio: inputPointRatio ?? "",
