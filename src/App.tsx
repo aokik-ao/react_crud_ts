@@ -17,7 +17,10 @@ export default function App() {
             <ItemList />
           </Route>
           <Route exact path="/react_crud_ts/ItemList/Detail">
-            <ItemDetail />
+            <ItemDetail newFlag={false} />
+          </Route>
+          <Route exact path="/react_crud_ts/ItemList/New">
+            <ItemDetail newFlag={true} />
           </Route>
           <Route path="*">
             <p>404です</p>

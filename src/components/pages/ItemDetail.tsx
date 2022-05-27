@@ -34,7 +34,14 @@ let fetchItem: ItemType = {
   update_date: undefined,
 };
 
-export const ItemDetail = () => {
+type propsType = {
+  newFlag: boolean;
+};
+
+export const ItemDetail = (props: propsType) => {
+  // 新規登録 or 更新のフラグ
+  const { newFlag } = props;
+  // 各値
   const [item, setItem] = useState(fetchItem);
   const [id, setId] = useState<number>();
   const [categories, setCategories] = useState(fetchCategories);
@@ -49,6 +56,7 @@ export const ItemDetail = () => {
   const [inputId, setInputId] = useState<string | undefined>();
   const [inputUpdateDate, setUpdateDate] = useState<string | undefined>();
 
+  // 必要なhook
   const { search } = useLocation();
   const history = useHistory();
 
@@ -65,20 +73,22 @@ export const ItemDetail = () => {
       }
     );
 
-    // アイテムを取得する
-    Axios.get(
-      `http://localhost:8080/react_crud_ts/item_detail/${targetId}`
-    ).then((res) => {
-      console.log(res.data);
-      setItem(res.data);
-      setInputCategoryId(res.data.category_id);
-      setinputName(res.data.name);
-      setInputPrice(res.data.price);
-      setInputPointRatio(res.data.point_ratio);
-      setReserveOnlyFlag(res.data.reserve_only_flag === "t" ? true : false);
-      setInputId(res.data.id);
-      setUpdateDate(res.data.update_date);
-    });
+    // アイテムを取得する(更新時のみ)
+    if (!newFlag) {
+      Axios.get(
+        `http://localhost:8080/react_crud_ts/item_detail/${targetId}`
+      ).then((res) => {
+        console.log(res.data);
+        setItem(res.data);
+        setInputCategoryId(res.data.category_id);
+        setinputName(res.data.name);
+        setInputPrice(res.data.price);
+        setInputPointRatio(res.data.point_ratio);
+        setReserveOnlyFlag(res.data.reserve_only_flag === "t" ? true : false);
+        setInputId(res.data.id);
+        setUpdateDate(res.data.update_date);
+      });
+    }
   }, []);
 
   // 各入力値を更新する
@@ -153,6 +163,32 @@ export const ItemDetail = () => {
         .catch((res) => {
           alert("削除に失敗しました。");
           history.push("/react_crud_ts/ItemList");
+        });
+    }
+  };
+
+  const onClickPost = () => {
+    if (window.confirm("新規登録をします。よろしいですか？")) {
+      // 新規登録としてpostメソッドを送信する
+      const postData = {
+        category_id: inputCategoryId,
+        name: inputName ?? "",
+        price: inputPrice ?? "",
+        point_ratio: inputPointRatio ?? "",
+        reserve_only_flag: inputReserveOnlyFlag ?? "",
+      };
+      Axios.post("http://localhost:8080/react_crud_ts/item_detail", postData)
+        .then((res) => {
+          alert("登録に成功しました。");
+          history.push("/react_crud_ts/ItemList");
+        })
+        .catch((error) => {
+          console.log(error.response);
+          const resData = error.response.data;
+          const messageList = resData.error_messages.split(",");
+          let message = "登録に失敗しました。\n";
+          message += messageList.join("\n");
+          alert(message);
         });
     }
   };
@@ -283,8 +319,18 @@ export const ItemDetail = () => {
           value={item.update_date}
         />
         <SbuttonBox>
-          <Sprimarybutton onClick={onClickUpdate}>更新する</Sprimarybutton>
-          <Ssecondarybutton onClick={onClickDelete}>削除する</Ssecondarybutton>
+          {newFlag ? (
+            <>
+              <Sprimarybutton onClick={onClickPost}>登録する</Sprimarybutton>
+            </>
+          ) : (
+            <>
+              <Sprimarybutton onClick={onClickUpdate}>更新する</Sprimarybutton>
+              <Ssecondarybutton onClick={onClickDelete}>
+                削除する
+              </Ssecondarybutton>
+            </>
+          )}
           <SpagebackButton onClick={onClickPageback}>戻る</SpagebackButton>
         </SbuttonBox>
       </Scontainer>

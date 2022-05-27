@@ -56,6 +56,12 @@ class Item_detail extends RestController
         }
     }
 
+    /**
+     * /item_detail
+     * putメソッド
+     * 該当のitem情報を更新する
+     * @return json
+     */
     public function index_put()
     {
         $params = json_decode(file_get_contents('php://input'), true);
@@ -101,19 +107,51 @@ class Item_detail extends RestController
         }
     }
 
+    /**
+     * /item_detail
+     * postメソッド
+     * 新規のitem情報を登録する
+     * @return json
+     */
+    public function index_post()
+    {
+        $params = json_decode(file_get_contents('php://input'), true);
+        $error_messages = '';
+
+        // バリデーションをする
+        $error_messages = $this->validation($params, $error_messages);
+
+        if ($error_messages != '') {
+            $this->response([
+                'status' => false,
+                'error_messages' => $error_messages
+            ], RestController::HTTP_BAD_REQUEST);
+        } else {
+            // 登録をする
+            $this->items->insert_item($params);
+            $this->response([
+                'status' => true,
+            ], RestController::HTTP_OK);
+        }
+    }
+
     private function validation($params, $error_messages)
     {
         $comma = ',';
-        if ($params['name'] == '') {
+        if ($params['name'] == "") {
             $error_messages .= '商品名を入力してください。' . $comma;
         } else if (mb_strlen($params['name']) > 30) {
             $error_messages .= '商品名は30文字以内で入力してください。' . $comma;
         }
         // 金額
-        if ($params['price'] == '') {
+        if ($params['price'] == "") {
             $error_messages .= '金額を入力してください。' . $comma;
         } elseif (!preg_match("/^[0-9]+$/", $params['price'])) {
             $error_messages .= '金額は半角整数で入力してください。' . $comma;
+        }
+        // ポイント還元率
+        if ($params['point_ratio'] == "") {
+            $error_messages .= 'ポイント還元率を選択してください。' . $comma;
         }
 
         return $error_messages;

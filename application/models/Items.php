@@ -7,6 +7,11 @@ class Items extends MY_Model
         parent::__construct();
     }
 
+    /**
+     * 全商品を取得する
+     *
+     * @return array
+     */
     public function select_items()
     {
         $this->db->select('i.id');
@@ -25,6 +30,12 @@ class Items extends MY_Model
         return $query->result();
     }
 
+    /**
+     * idに一致する商品を取得する
+     *
+     * @param [string] $id
+     * @return void
+     */
     public function select_items_by_key($id)
     {
         $this->db->select('i.id');
@@ -43,11 +54,23 @@ class Items extends MY_Model
         return $query->row();
     }
 
+    /**
+     * idに一致する商品を削除する
+     *
+     * @param [string] $id
+     * @return void
+     */
     public function delele_item($id)
     {
         $this->db->delete('public.items', array('id' => $id));
     }
 
+    /**
+     * idに一致する商品を更新する
+     *
+     * @param [array] $params
+     * @return void
+     */
     public function update_item($params)
     {
         $this->db->set('category_id', $params['category_id']);
@@ -58,5 +81,24 @@ class Items extends MY_Model
         $this->db->set('update_date', 'now()');
         $this->db->where('id', $params['id']);
         $this->db->update('public.items');
+    }
+
+
+    /**
+     * 新規の商品を登録する
+     *
+     * @param [array] $params
+     * @return void
+     */
+    public function insert_item($params)
+    {
+        $this->db->set('category_id', $params['category_id']);
+        $this->db->set('name', $params['name']);
+        $this->db->set('price', $params['price']);
+        $this->db->set('point_ratio', $params['point_ratio']);
+        $this->db->set('reserve_only_flag', $params['reserve_only_flag']);
+        $this->db->set('regist_date', 'now()');
+        $this->db->set('update_date', 'now()');
+        $this->db->insert('public.items');
     }
 }

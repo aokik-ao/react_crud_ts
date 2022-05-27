@@ -29,7 +29,7 @@ export const ItemList = () => {
   const history = useHistory();
 
   const onClickNewItem = () => {
-    alert("新規登録をしますよ");
+    history.push("/react_crud_ts/ItemList/New");
   };
 
   //   CSSを定義
