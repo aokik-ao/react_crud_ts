@@ -86,7 +86,6 @@ export const ItemList = () => {
             <Sprimarybutton
               // 詳細画面へ遷移させる
               onClick={() => {
-                console.log(item.id);
                 history.push(`ItemList/detail/?id=${item.id}`);
               }}
             >

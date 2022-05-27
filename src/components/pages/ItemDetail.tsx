@@ -78,7 +78,6 @@ export const ItemDetail = (props: propsType) => {
       Axios.get(
         `http://localhost:8080/react_crud_ts/item_detail/${targetId}`
       ).then((res) => {
-        console.log(res.data);
         setItem(res.data);
         setInputCategoryId(res.data.category_id);
         setinputName(res.data.name);
@@ -127,8 +126,6 @@ export const ItemDetail = (props: propsType) => {
       };
       Axios.put("http://localhost:8080/react_crud_ts/item_detail", postData)
         .then((res) => {
-          console.log(res);
-          console.log(res.data);
           alert("更新に成功しました。");
 
           // 更新日時を取得しなおす
@@ -140,7 +137,6 @@ export const ItemDetail = (props: propsType) => {
         })
 
         .catch((error) => {
-          console.log(error.response);
           const resData = error.response.data;
           const messageList = resData.error_messages.split(",");
           let message = "更新に失敗しました。\n";
@@ -183,7 +179,6 @@ export const ItemDetail = (props: propsType) => {
           history.push("/react_crud_ts/ItemList");
         })
         .catch((error) => {
-          console.log(error.response);
           const resData = error.response.data;
           const messageList = resData.error_messages.split(",");
           let message = "登録に失敗しました。\n";
