@@ -44,7 +44,7 @@ export const ItemDetail = () => {
   const [inputPrice, setInputPrice] = useState<string | undefined>();
   const [inputPointRatio, setInputPointRatio] = useState<string | undefined>();
   const [inputReserveOnlyFlag, setReserveOnlyFlag] = useState<
-    string | undefined
+    boolean | undefined
   >();
   const [inputId, setInputId] = useState<string | undefined>();
   const [inputUpdateDate, setUpdateDate] = useState<string | undefined>();
@@ -74,8 +74,8 @@ export const ItemDetail = () => {
       setInputCategoryId(res.data.category_id);
       setinputName(res.data.name);
       setInputPrice(res.data.price);
-      setInputPointRatio(res.data.point_radio);
-      setReserveOnlyFlag(res.data.reserve_only_flag);
+      setInputPointRatio(res.data.point_ratio);
+      setReserveOnlyFlag(res.data.reserve_only_flag === "t" ? true : false);
       setInputId(res.data.id);
       setUpdateDate(res.data.update_date);
     });
@@ -87,12 +87,12 @@ export const ItemDetail = () => {
     console.log(val);
     setInputCategoryId(val);
   };
-  const onChangeName = (e: any) => {
+  const onBlurName = (e: any) => {
     const val = e.target.value;
     console.log(val);
     setinputName(val);
   };
-  const onChangePrice = (e: any) => {
+  const onBlurPrice = (e: any) => {
     const val = e.target.value;
     console.log(val);
     setInputPrice(val);
@@ -102,8 +102,8 @@ export const ItemDetail = () => {
     console.log(val);
     setInputPointRatio(val);
   };
-  const onChangeReserveOnlyFlag = (e: any) => {
-    const val = e.target.value;
+  const onClickReserveOnlyFlag = (e: any) => {
+    const val = e.target.checked;
     console.log(val);
     setReserveOnlyFlag(val);
   };
@@ -202,7 +202,7 @@ export const ItemDetail = () => {
               type="text"
               name="name"
               defaultValue={inputName}
-              onChange={onChangeName}
+              onBlur={onBlurName}
             />
           </Sbox>
           <Sbox>
@@ -211,37 +211,43 @@ export const ItemDetail = () => {
               type="text"
               name="price"
               defaultValue={inputPrice}
-              onChange={onChangePrice}
+              onBlur={onBlurPrice}
             />
             円
           </Sbox>
           <Sbox>
             <Slabel>ポイント還元率</Slabel>
+            {/* TODO 挙動がおかしい、2回クリックしないといけない、後で修正をする */}
             <div>
               <input
                 type="radio"
-                defaultChecked={inputPointRatio === "10" ? true : false}
                 name="point_ratio"
+                defaultChecked={inputPointRatio === "10" ? true : false}
                 value="5"
                 onChange={onChangePointRatio}
+                id="point-ratio-5"
               />
-              <label style={{ marginRight: "16px" }}>5%</label>
+              <label htmlFor="point-ratio-5" style={{ marginRight: "16px" }}>
+                5%
+              </label>
               <input
                 type="radio"
                 name="point_ratio"
                 defaultChecked={inputPointRatio === "5" ? true : false}
                 value="10"
+                onChange={onChangePointRatio}
+                id="point-ratio-10"
               />
-              <label>10%</label>
+              <label htmlFor="point-ratio-10">10%</label>
             </div>
           </Sbox>
           <Sbox>
             <Slabel>予約専用商品</Slabel>
             <input
               type="checkbox"
-              defaultChecked={inputReserveOnlyFlag === "t" ? true : false}
+              defaultChecked={inputReserveOnlyFlag}
               name="reserve_only_flag"
-              onChange={onChangeReserveOnlyFlag}
+              onClick={onClickReserveOnlyFlag}
             />
           </Sbox>
         </Sinputs>

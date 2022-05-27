@@ -21,7 +21,6 @@ class Items extends MY_Model
         $this->db->from('public.items as i');
         $this->db->join('public.categories as c', 'i.category_id = c.id', 'left');
         $this->db->order_by("i.id", "ASC");
-        // TODO 余裕があったらログを出す、ログを出す方法を調べるところから
         $query = $this->db->get();
         return $query->result();
     }
@@ -40,7 +39,6 @@ class Items extends MY_Model
         $this->db->from('public.items as i');
         $this->db->where('i.id', $id);
         $this->db->join('public.categories as c', 'i.category_id = c.id', 'left');
-        // TODO 余裕があったらログを出す、ログを出す方法を調べるところから
         $query = $this->db->get();
         return $query->row();
     }
