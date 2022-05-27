@@ -60,6 +60,7 @@ $route['item_list']['get'] = 'item_list/index_get';
 $route['item_detail/(:num)'] = 'item_detail/index_get';
 $route['item_detail']['post'] = 'item_detail/index_post';
 $route['item_detail']['delete'] = 'item_detail/index_delete';
+$route['item_detail']['put'] = 'item_detail/index_put';
 
 // 詳細でカテゴリーを取得するのに使用
 $route['item_categories']['get'] = 'item_categories/index_get';

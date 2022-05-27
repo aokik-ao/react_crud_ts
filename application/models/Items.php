@@ -47,4 +47,16 @@ class Items extends MY_Model
     {
         $this->db->delete('public.items', array('id' => $id));
     }
+
+    public function update_item($params)
+    {
+        $this->db->set('category_id', $params['category_id']);
+        $this->db->set('name', $params['name']);
+        $this->db->set('price', $params['price']);
+        $this->db->set('point_ratio', $params['point_ratio']);
+        $this->db->set('reserve_only_flag', $params['reserve_only_flag']);
+        $this->db->set('update_date', 'now()');
+        $this->db->where('id', $params['id']);
+        $this->db->update('public.items');
+    }
 }

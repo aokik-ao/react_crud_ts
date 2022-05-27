@@ -84,52 +84,77 @@ export const ItemDetail = () => {
   // 各入力値を更新する
   const onChangeCategoryId = (e: any) => {
     const val = e.target.value;
-    console.log(val);
     setInputCategoryId(val);
   };
   const onBlurName = (e: any) => {
     const val = e.target.value;
-    console.log(val);
     setinputName(val);
   };
   const onBlurPrice = (e: any) => {
     const val = e.target.value;
-    console.log(val);
     setInputPrice(val);
   };
   const onChangePointRatio = (e: any) => {
     const val = e.target.value;
-    console.log(val);
     setInputPointRatio(val);
   };
   const onClickReserveOnlyFlag = (e: any) => {
     const val = e.target.checked;
-    console.log(val);
     setReserveOnlyFlag(val);
   };
 
   const onClickUpdate = () => {
-    window.confirm("更新をしますか？");
-    // 更新を送信する
-    // 各値をstateに持たせておいて、objectを作成し、postする流れになる想定
-    // useStateは各入力項目ごとに作成する必要あり。
-    // https://www.sukerou.com/2019/05/axios.html
+    if (window.confirm("更新をします。よろしいですか？")) {
+      // 更新としてputメソッドを送信する
+      const postData = {
+        id: inputId,
+        category_id: inputCategoryId,
+        name: inputName,
+        price: inputPrice,
+        point_ratio: inputPointRatio,
+        reserve_only_flag: inputReserveOnlyFlag,
+        update_date: inputUpdateDate,
+      };
+      Axios.put("http://localhost:8080/react_crud_ts/item_detail", postData)
+        .then((res) => {
+          console.log(res);
+          console.log(res.data);
+          alert("更新に成功しました。");
+
+          // 更新日時を取得しなおす
+          Axios.get(
+            `http://localhost:8080/react_crud_ts/item_detail/${id}`
+          ).then((res) => {
+            setUpdateDate(res.data.update_date);
+          });
+        })
+
+        .catch((error) => {
+          console.log(error.response);
+          const resData = error.response.data;
+          const messageList = resData.error_messages.split(",");
+          let message = "更新に失敗しました。\n";
+          message += messageList.join("\n");
+          alert(message);
+        });
+    }
   };
 
   const onClickDelete = () => {
-    window.confirm("削除をします。よろしいですか？");
-    // 削除を送信する
-    Axios.delete(`http://localhost:8080/react_crud_ts/item_detail`, {
-      data: { id: id },
-    })
-      .then((res) => {
-        alert("削除に成功しました。");
-        history.push("/react_crud_ts/ItemList");
+    if (window.confirm("削除をします。よろしいですか？")) {
+      // 削除としてdeleteメソッドを送信する
+      Axios.delete("http://localhost:8080/react_crud_ts/item_detail", {
+        data: { id: id },
       })
-      .catch((res) => {
-        alert("削除に失敗しました。");
-        history.push("/react_crud_ts/ItemList");
-      });
+        .then((res) => {
+          alert("削除に成功しました。");
+          history.push("/react_crud_ts/ItemList");
+        })
+        .catch((res) => {
+          alert("削除に失敗しました。");
+          history.push("/react_crud_ts/ItemList");
+        });
+    }
   };
 
   const onClickPageback = () => history.push("/react_crud_ts/ItemList");
@@ -217,12 +242,11 @@ export const ItemDetail = () => {
           </Sbox>
           <Sbox>
             <Slabel>ポイント還元率</Slabel>
-            {/* TODO 挙動がおかしい、2回クリックしないといけない、後で修正をする */}
             <div>
               <input
                 type="radio"
                 name="point_ratio"
-                defaultChecked={inputPointRatio === "10" ? true : false}
+                defaultChecked={inputPointRatio === "5" ? true : false}
                 value="5"
                 onChange={onChangePointRatio}
                 id="point-ratio-5"
@@ -233,7 +257,7 @@ export const ItemDetail = () => {
               <input
                 type="radio"
                 name="point_ratio"
-                defaultChecked={inputPointRatio === "5" ? true : false}
+                defaultChecked={inputPointRatio === "10" ? true : false}
                 value="10"
                 onChange={onChangePointRatio}
                 id="point-ratio-10"
