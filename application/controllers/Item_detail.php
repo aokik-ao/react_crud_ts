@@ -116,6 +116,7 @@ class Item_detail extends RestController
     public function index_post()
     {
         $params = json_decode(file_get_contents('php://input'), true);
+        $params["reserve_only_flag"] = $params["reserve_only_flag"] == "" ? false : $params["reserve_only_flag"];
         $error_messages = '';
 
         // バリデーションをする

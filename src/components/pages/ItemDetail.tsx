@@ -2,6 +2,10 @@ import Axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useLocation, useHistory } from "react-router-dom";
 import styled from "styled-components";
+import { CategoriesInput } from "../atoms/CategoriesInput";
+import { PointRatioInput } from "../atoms/PointRatioInput";
+import { ReserveOnlyFlagInput } from "../atoms/ReserveOnlyFlagInput";
+import { TextInput } from "../atoms/TextInput";
 
 type ItemType = {
   id?: string;
@@ -204,15 +208,6 @@ export const ItemDetail = (props: propsType) => {
     display: flex;
   `;
 
-  const Sbox = styled.div`
-    margin-bottom: 16px;
-  `;
-
-  const Slabel = styled.div`
-    width: 160px;
-    margin-right: 8px;
-  `;
-
   const SbuttonBox = styled.div`
     display: flex;
   `;
@@ -238,73 +233,43 @@ export const ItemDetail = (props: propsType) => {
       <Scontainer>
         <Sh>明細画面</Sh>
         <Sinputs>
-          <Sbox>
-            <Slabel>商品カテゴリー</Slabel>
-            <select
-              name="category"
-              defaultValue={inputCategoryId}
-              onChange={onChangeCategoryId}
-            >
-              {categories.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {category.name}
-                </option>
-              ))}
-            </select>
-          </Sbox>
-          <Sbox>
-            <Slabel>商品名</Slabel>
-            <input
-              type="text"
-              name="name"
-              defaultValue={inputName}
-              onBlur={onBlurName}
-            />
-          </Sbox>
-          <Sbox>
-            <Slabel>金額</Slabel>
-            <input
-              type="text"
-              name="price"
-              defaultValue={inputPrice}
-              onBlur={onBlurPrice}
-            />
-            円
-          </Sbox>
-          <Sbox>
-            <Slabel>ポイント還元率</Slabel>
-            <div>
-              <input
-                type="radio"
-                name="point_ratio"
-                defaultChecked={inputPointRatio === "5" ? true : false}
-                value="5"
-                onChange={onChangePointRatio}
-                id="point-ratio-5"
-              />
-              <label htmlFor="point-ratio-5" style={{ marginRight: "16px" }}>
-                5%
-              </label>
-              <input
-                type="radio"
-                name="point_ratio"
-                defaultChecked={inputPointRatio === "10" ? true : false}
-                value="10"
-                onChange={onChangePointRatio}
-                id="point-ratio-10"
-              />
-              <label htmlFor="point-ratio-10">10%</label>
-            </div>
-          </Sbox>
-          <Sbox>
-            <Slabel>予約専用商品</Slabel>
-            <input
-              type="checkbox"
-              defaultChecked={inputReserveOnlyFlag}
-              name="reserve_only_flag"
-              onClick={onClickReserveOnlyFlag}
-            />
-          </Sbox>
+          <CategoriesInput
+            label="商品カテゴリー"
+            name="category"
+            defaultValue={inputCategoryId}
+            onChange={onChangeCategoryId}
+            categories={categories}
+          />
+
+          <TextInput
+            label="商品名"
+            name="name"
+            defaultValue={inputName}
+            onBlur={onBlurName}
+            unit=""
+          />
+
+          <TextInput
+            label="金額"
+            name="price"
+            defaultValue={inputPrice}
+            onBlur={onBlurPrice}
+            unit="円"
+          />
+
+          <PointRatioInput
+            label="ポイント還元率"
+            name="point_ratio"
+            defaultChecked={inputPointRatio}
+            onChange={onChangePointRatio}
+          />
+
+          <ReserveOnlyFlagInput
+            label="予約専用商品"
+            name="reserve_only_flag"
+            defaultChecked={inputReserveOnlyFlag}
+            onClick={onClickReserveOnlyFlag}
+          />
         </Sinputs>
         <input type="hidden" name="id" id="update-id" value={item.id} />
         <input
