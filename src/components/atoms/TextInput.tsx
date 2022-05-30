@@ -7,11 +7,12 @@ type PropsType = {
   defaultValue?: string;
   onBlur: (e: any) => void;
   unit: string;
+  type: string;
 };
 
 export const TextInput = (props: PropsType) => {
   {
-    const { label, name, defaultValue, onBlur, unit } = props;
+    const { label, name, defaultValue, onBlur, unit, type } = props;
 
     const Sbox = styled.div`
       margin-bottom: 16px;
@@ -26,8 +27,8 @@ export const TextInput = (props: PropsType) => {
       <Sbox>
         <Slabel>{label}</Slabel>
         <input
-          type="text"
-          name="name"
+          type={type}
+          name={name}
           defaultValue={defaultValue}
           onBlur={onBlur}
         />

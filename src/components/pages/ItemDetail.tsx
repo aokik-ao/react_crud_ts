@@ -247,6 +247,7 @@ export const ItemDetail = (props: propsType) => {
             defaultValue={inputName}
             onBlur={onBlurName}
             unit=""
+            type="text"
           />
 
           <TextInput
@@ -255,6 +256,7 @@ export const ItemDetail = (props: propsType) => {
             defaultValue={inputPrice}
             onBlur={onBlurPrice}
             unit="円"
+            type="text"
           />
 
           <PointRatioInput
